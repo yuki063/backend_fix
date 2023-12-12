@@ -33,6 +33,7 @@ export const registerPhoneNumber = async (req: Request, res: Response) => {
 		}
 
 		let { hash, otp } = createNewOTP(phoneNumber);
+		console.log(hash, otp);
 		let sms = registerSMS(otp);
 		await sendSMS(phoneNumber, sms);
 		return successResponse(

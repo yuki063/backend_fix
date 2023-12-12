@@ -1,0 +1,614 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "APZ-Pay backend",
+        "title": "APZ-Pay",
+        "termsOfService": "http://swagger.io/terms/",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "USER CONTROLLER",
+            "description": "Operations on users"
+        },
+        {
+            "name": "WALLET CONTROLLER",
+            "description": "Operations on wallets"
+        }
+    ],
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "bearerFormat": "JWT",
+            "scheme": "bearer"
+        }
+    },
+    "paths": {
+        "/v1/users/get-user-data": {
+            "get": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Get user data",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/upload-identity-document": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Upload your identity document",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "description": "Type of identity",
+                        "type": "string",
+                        "required": "true"
+                    },
+                    {
+                        "in": "body",
+                        "name": "identity",
+                        "description": "Picture of your identity",
+                        "type": "file",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/upload-selfie": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Upload your selfie",
+                "consumes": ["multipart/form-data"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "selfie",
+                        "description": "Your selfie",
+                        "type": "file",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/wallets/create-wallet": {
+            "post": {
+                "tags": ["WALLET CONTROLLER"],
+                "summary": "Create wallet",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Create wallet",
+                        "type": "object",
+                        "description": "Wallet to be created",
+                        "properties": {
+                            "walletName": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "walletType": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "walletCurrency": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/wallets/get-your-wallets": {
+            "get": {
+                "tags": ["WALLET CONTROLLER"],
+                "summary": "Create wallet",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/register-phone-number": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Register phone number",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Register phone number",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/verify-phone-number": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Verify phone number for user to signup",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "verify phone number",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "code": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/reset-password/verify-phone-number": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Verify phone number to reset your password",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "verify phone number",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "code": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/activate-user": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Activate user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "id",
+                        "type": "object",
+                        "description": "Id of the user to activate",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/deactivate-user": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Deactivate user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "id",
+                        "type": "object",
+                        "description": "Id of the user to activate",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/reset-password": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "login the user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Reset phone number",
+                        "type": "object",
+                        "description": "Phone number of the user who wants to reset password",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/resend/signup-otp": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Resend signup otp",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "phone number",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/create-user-password": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Resend signup otp",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "new password",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "password": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/resend/reset-otp": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Resend signup otp",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "phone number",
+                        "type": "object",
+                        "description": "Phone number to be registered",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/signup/upload-personal-information": {
+            "put": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "Upload personal information",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "personal information",
+                        "type": "object",
+                        "description": "Personal information of the user",
+                        "properties": {
+                            "fullname": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "surname": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "identityNumber": {
+                                "type": "number",
+                                "required": "true"
+                            },
+                            "expiryDate": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/users/login": {
+            "post": {
+                "tags": ["USER CONTROLLER"],
+                "summary": "login the user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "login data",
+                        "type": "object",
+                        "description": "Login data of the user",
+                        "properties": {
+                            "phoneNumber": {
+                                "type": "string",
+                                "required": "true"
+                            },
+                            "password": {
+                                "type": "string",
+                                "required": "true"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Invalid data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    }
+}
