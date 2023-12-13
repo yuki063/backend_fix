@@ -9,7 +9,7 @@ export const walletToWallet = async (req: any, res: Response) => {
 
     const charge = await stripeConfig.charges.create({
       amount: amount,
-      currency: "zar",
+      currency: "sar",
       customer: sourceCustomerId,
     });
     await Wallet.findOneAndUpdate(

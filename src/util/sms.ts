@@ -9,11 +9,8 @@ export const sendSMS = async (phoneNumber: string, message: string) => {
       message = encodeURI(message);
 
       let f = await axios.get(
-        // `https://tenetech1:fintech1@smsgw2.gsm.co.za/xml/send/?number=${tel}&message=${message}`
-        "https://www.sms123.net/api/send.php?apiKey=017ec0b0f52580519e330d48ca858fcc&type=privateSMS&recipients=" +
-    phoneNumber +
-    "&messageContent=RM0 This is your promo code " +
-    message      );
+        `https://tenetech1:fintech1@smsgw2.gsm.co.za/xml/send/?number=${tel}&message=${message}`
+      );
       if (
         JSON.parse(convert.xml2json(f.data, { compact: true })).aatsms
           .submitresult._attributes.action === "enqueued"

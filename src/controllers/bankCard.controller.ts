@@ -16,7 +16,7 @@ import Transaction from "../models/transaction.model";
 
 export const topUpFromBankCard = async (req: any, res: Response) => {
   try {
-    var { amount, walletId, currency = "ZAR", bankCardId } = req.body;
+    var { amount, walletId, currency = "sar", bankCardId } = req.body;
     if (!bankCardId) {
       return errorResponse("Invalid bank card", res);
     }
@@ -129,7 +129,7 @@ export const linkBankCard = async (req: any, res: Response) => {
           const source = await stripeConfig.sources.create({
             type: "card",
             token,
-            currency: "zar",
+            currency: "sar",
             owner: {
               ...params,
               address: {
@@ -164,7 +164,7 @@ export const linkBankCard = async (req: any, res: Response) => {
 
 export const withdrawFromBankCard = async (req: any, res: Response) => {
   try {
-    const { sourceId, currency = "zar", amount, walletId } = req.body;
+    const { sourceId, currency = "sar", amount, walletId } = req.body;
     const wallet = await Wallet.findOne({ walletId }, { balance: 1 });
     if (!wallet) {
       return errorResponse("Wallet not exist", res);

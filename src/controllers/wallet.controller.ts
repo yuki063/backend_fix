@@ -32,7 +32,9 @@ export const getWallet = async (req: any, res: Response) => {
 
 export const createWallet = async (req: any, res: Response) => {
   try {
-    const { email, phoneNumber, currency = "zar", name, kind } = req.body;
+    console.log("ggggg")
+
+    const { email, phoneNumber, currency = "sar", name, kind } = req.body;
     if (!email && !phoneNumber) {
       return errorResponse("Enter your phone number or email", res);
     }
@@ -50,6 +52,8 @@ export const createWallet = async (req: any, res: Response) => {
       kind,
       name,
     });
+    console.log(wallet)
+
     await wallet.save();
     return successResponse("Wallet created successfully", null, res);
   } catch (error) {
