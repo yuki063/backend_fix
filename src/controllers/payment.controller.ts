@@ -142,7 +142,7 @@ export const approve = async (req: Request, res: Response) => {
 const StripeFun = async (email, name, amount, stripe_key) =>{
   console.log(email,name,amount,'pppp')
   const stripe = new Stripe(stripe_key);
-
+ 
   const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -158,51 +158,55 @@ const StripeFun = async (email, name, amount, stripe_key) =>{
       ],
       customer_email :email ,
       mode: 'payment',
-      success_url: process.env.FRONTEND_URL + '/wallet/transfer-wallet-wallet',
+      success_url: process.env.FRONTEND_URL + '/alert' + `?amount=${amount}&email=${email}`,
       cancel_url : process.env.FRONTEND_URL + '/',
     
     });
+    
+    
     return session.url;
-
 }
+
 export const stripePayment = async (req: Request, res: Response) => {
   const stripe_key = 'sk_test_51OKw5bDgDmJR6QyjWYUU93fed7tAExK7eFgyjjEqv6PBDf3CThAS8hY45SbKCWXN0B03SbcjSqvFbRma7SCKGb2l00nHtA9oZU'
   const { phoneNumber, email, amount} = req.body;
   const senduser = (req as any).user;
-  console.log("senduser", senduser);
+  
   var user;
-		if (email) {
-			user = await User.findOne(
+  if (email) {
+    user = await User.findOne(
+      {
+        email,
+      },
 				{
-					email,
-				},
-				{
-					status: 0,
+          status: 0,
 					expiryDate: 0,
 				}
-			);
-		} else if (phoneNumber) {
-			user = await User.findOne(
-				{ phoneNumber },
-				{
-					status: 0,
-					expiryDate: 0,
-				}
-			);
-		} else {
-			return errorResponse('Phone number or email is required', res);
-		}
-    if (!user) {
+        );
+      } else if (phoneNumber) {
+        user = await User.findOne(
+          { phoneNumber },
+          {
+            status: 0,
+            expiryDate: 0,
+          }
+          );
+        } else {
+          return errorResponse('Phone number or email is required', res);
+        }
+        console.log("user", user);
+        if (!user) {
 			if (email) {
 				return errorResponse('Invalid email or password', res);
 			} else if (phoneNumber) {
 				return errorResponse('Invalid phone number or password', res);
 			}
 		}
+    let sender;
     if (senduser.email) {
-			user = await User.findOne(
+			sender = await User.findOne(
 				{
-					email,
+					email: senduser.email
 				},
 				{
 					status: 0,
@@ -210,8 +214,8 @@ export const stripePayment = async (req: Request, res: Response) => {
 				}
 			);
 		} else if (senduser.phoneNumber) {
-			user = await User.findOne(
-				{ phoneNumber },
+			sender = await User.findOne(
+				{ phoneNumber : senduser.phoneNumber},
 				{
 					status: 0,
 					expiryDate: 0,
@@ -221,21 +225,17 @@ export const stripePayment = async (req: Request, res: Response) => {
 			return errorResponse('Phone number or email is required', res);
 		}
 		
-    if (amount>=senduser.balance){
+    if (amount>=sender.balance){
       return errorResponse('Enter Correct Amount', res);
     }
-    console.log("senduser", senduser);
-  console.log(senduser.balance);
-  console.log(user.balance);
+
   
-  senduser.balance -= parseInt(amount, 10);
+  sender.balance -= parseInt(amount, 10);
   user.balance += parseInt(amount, 10);
-  console.log(user.balance);
-  console.log(senduser.balance);
+
   User.updateOne({email: user.email}, {$set:{balance: user.balance}});
   User.updateOne({email: senduser.email}, {$set:{balance: senduser.balance}});
   const session_url = await StripeFun(user.email, user.name , amount, stripe_key)
-
 
   res.status(200).json({ url: session_url });
 };
