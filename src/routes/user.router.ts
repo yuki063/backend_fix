@@ -27,7 +27,7 @@ import authMiddleware from "../middlewares/auth.middleware";
 import User from "../models/user.model";
 import { createCustomer } from "../util/stripe";
 
-const userRouter = Router();
+const  userRouter = Router();
 userRouter.put("/reset-passwrod/update", newPassword);
 userRouter.get(
   "/create-stripe-customer",

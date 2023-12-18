@@ -84,6 +84,14 @@ const userSchema: Schema = new Schema(
     identityNumber: {
       type: String,
     },
+    balance: {
+      type: Number,
+      default:0,
+    },
+    name: {
+      type: String,
+      default:'text',
+    },
   },
   {
     timestamps: true,

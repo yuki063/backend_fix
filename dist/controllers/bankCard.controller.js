@@ -23,7 +23,7 @@ const card_1 = require("../util/card");
 const transaction_model_1 = __importDefault(require("../models/transaction.model"));
 const topUpFromBankCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        var { amount, walletId, currency = "ZAR", bankCardId } = req.body;
+        var { amount, walletId, currency = "sar", bankCardId } = req.body;
         if (!bankCardId) {
             return (0, api_response_1.errorResponse)("Invalid bank card", res);
         }
@@ -106,7 +106,7 @@ const linkBankCard = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 const source = yield stripe_config_1.default.sources.create({
                     type: "card",
                     token,
-                    currency: "zar",
+                    currency: "sar",
                     owner: Object.assign(Object.assign({}, params), { address: {
                             country: "ZA",
                         } }),
@@ -140,7 +140,7 @@ const linkBankCard = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.linkBankCard = linkBankCard;
 const withdrawFromBankCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { sourceId, currency = "zar", amount, walletId } = req.body;
+        const { sourceId, currency = "sar", amount, walletId } = req.body;
         const wallet = yield wallet_model_1.default.findOne({ walletId }, { balance: 1 });
         if (!wallet) {
             return (0, api_response_1.errorResponse)("Wallet not exist", res);

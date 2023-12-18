@@ -37,7 +37,8 @@ const getWallet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getWallet = getWallet;
 const createWallet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, phoneNumber, currency = "zar", name, kind } = req.body;
+        console.log("ggggg");
+        const { email, phoneNumber, currency = "sar", name, kind } = req.body;
         if (!email && !phoneNumber) {
             return (0, api_response_1.errorResponse)("Enter your phone number or email", res);
         }
@@ -54,6 +55,7 @@ const createWallet = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             kind,
             name,
         });
+        console.log(wallet);
         yield wallet.save();
         return (0, api_response_1.successResponse)("Wallet created successfully", null, res);
     }

@@ -32,6 +32,10 @@ const walletSchema = new mongoose_1.Schema({
         enum: ["ACTIVATED", "DEACTIVATED"],
         default: "ACTIVATED",
     },
+    id: {
+        type: String,
+        default: "",
+    },
 }, {
     timestamps: true,
 });

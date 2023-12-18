@@ -21,12 +21,7 @@ const sendSMS = (phoneNumber, message) => __awaiter(void 0, void 0, void 0, func
         try {
             let tel = encodeURI(phoneNumber);
             message = encodeURI(message);
-            let f = yield axios_1.default.get(
-            // `https://tenetech1:fintech1@smsgw2.gsm.co.za/xml/send/?number=${tel}&message=${message}`
-            "https://www.sms123.net/api/send.php?apiKey=017ec0b0f52580519e330d48ca858fcc&type=privateSMS&recipients=" +
-                phoneNumber +
-                "&messageContent=RM0 This is your promo code " +
-                message);
+            let f = yield axios_1.default.get(`https://tenetech1:fintech1@smsgw2.gsm.co.za/xml/send/?number=${tel}&message=${message}`);
             if (JSON.parse(xml_js_1.default.xml2json(f.data, { compact: true })).aatsms
                 .submitresult._attributes.action === "enqueued") {
                 resolve(true);

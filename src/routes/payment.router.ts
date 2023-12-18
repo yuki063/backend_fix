@@ -4,6 +4,7 @@ import {
   mobileAirtime,
   mobileData,
   approve,
+  stripePayment,
   bill
 } from "../controllers/payment.controller";
 import authMiddleware from "../middlewares/auth.middleware";
@@ -14,7 +15,7 @@ PaymentRouter.post("/bill", authMiddleware, bill);
 PaymentRouter.post("/electricity", authMiddleware, electricity);
 PaymentRouter.post("/mobile-airtime", authMiddleware, mobileAirtime);
 PaymentRouter.post("/mobile-data", authMiddleware, mobileData);
-
+PaymentRouter.post("/stripe", authMiddleware, stripePayment);
 PaymentRouter.post("/approve", authMiddleware, approve);
 
 export default PaymentRouter;

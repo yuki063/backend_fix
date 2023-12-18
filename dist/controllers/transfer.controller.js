@@ -21,7 +21,7 @@ const walletToWallet = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const { amount, sourceCustomerId, destinationCustomerId } = req.body;
         const charge = yield stripe_config_1.default.charges.create({
             amount: amount,
-            currency: "zar",
+            currency: "sar",
             customer: sourceCustomerId,
         });
         yield wallet_model_1.default.findOneAndUpdate({
